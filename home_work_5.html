@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="data_tabel.js"></script>
+</head>
+<body>
+    <form nama="biodata" action="" method="post">
+        <div>
+            <label for="nama">Nama</label><br>
+            <input type="text" id="name" placeholder="nama lengkap">
+        </div>
+        <div>
+            <label for="umur">Umur</label><br>
+            <input type="number" id="age" value="umur" placeholder="umur minimal 25">
+        </div>
+        <div>
+            <label for="uang_sangu">Uang Sangu</label><br>
+            <input type="number" id="uang_sangu" value="uang sangu" placeholder="uang sangu">
+        </div>
+ 
+        <input type="button" value="Submit" onclick="add()">        
+    </form>
+
+    <div>
+        <table id="output">
+            <thead>
+                <td>Nama</td>
+                <td>Umur</td>
+                <td>Uang Sangu</td>                    
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+ 
+    <p id="resume"></p>
+ 
+    <script>         
+        function add(){
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            let uang_sangu = document.getElementById("uang_sangu").value;
+            let output = document.querySelector("#output tbody");
+            
+            if (name.length < 10 || age < 25 || uang_sangu < 100000 || uang_sangu > 1000000) {
+                alert("Isilah Data sesuai syarat sah sholat");                
+            }else{
+                output.innerHTML += "<tr class='hasil'><td>" + name + "</td><td>" + age + "</td><td>" + uang_sangu + "</td></tr>";
+                let tag_tr = document.querySelectorAll(".hasil");
+                let total_umur = 0;
+                let total_uang_sangu = 0;
+                for (let i = 0; i < tag_tr.length; i++) {
+                    let tr = tag_tr[i];                
+                    let td = tr.children; 
+                    
+                    total_umur += parseInt(td[1].textContent);
+                    total_uang_sangu += parseInt(td[2].textContent)                
+                }
+                let rata_rata_umur = total_umur / tag_tr.length;
+                let rata_rata_uangsangu = total_uang_sangu / tag_tr.length;
+            
+                document.getElementById("resume").innerHTML = "Rata-rata pendaftar memiliki uang sangu sebesar " + rata_rata_uangsangu + " dengan rata-rata umur " + rata_rata_umur;
+            }
+        }
+  
+    </script>
+</body>
+</html>
